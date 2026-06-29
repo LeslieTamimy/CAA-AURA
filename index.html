@@ -1,24 +1,10 @@
-<!--
-  Carte interactive CAA AuRA - bloc autonome pour Tilda
-  Données calculées le 29/06/2026 à partir des deux exports Excel fournis :
-  - Enquête Professionnels
-  - Enquête Directions
-  Source géographique : france-geojson, départements détaillés projetés en Lambert-93.
--->
+<!-- Carte interactive - bloc autonome pour Tilda -->
 <div class="caa-map-widget" id="caa-aura-map">
-  <div class="caa-map-shell" aria-labelledby="caa-map-title">
-    <div class="caa-map-header">
-      <div>
-        <p class="caa-map-kicker">CAA AuRA</p>
-        <h2 id="caa-map-title">Participation aux enquêtes par département</h2>
-      </div>
-      <p class="caa-map-subtitle">Cumul Directions + Professionnels</p>
-    </div>
-
+  <div class="caa-map-shell">
     <div class="caa-map-layout">
       <div class="caa-map-stage">
-        <svg class="caa-map-svg" viewBox="0 0 720 620" role="img" aria-describedby="caa-map-desc" aria-labelledby="caa-map-svg-title">
-          <title id="caa-map-svg-title">Carte interactive de la région Auvergne-Rhône-Alpes</title>
+        <svg class="caa-map-svg" viewBox="0 0 720 620" role="img" aria-describedby="caa-map-desc">
+          <title>Carte interactive de la région Auvergne-Rhône-Alpes</title>
           <desc id="caa-map-desc">Chaque département peut être survolé ou sélectionné au clavier pour connaître le nombre total de réponses aux deux enquêtes.</desc>
           <g class="caa-map-departments" aria-label="Départements Auvergne-Rhône-Alpes"></g>
         </svg>
@@ -68,42 +54,8 @@
   .caa-map-shell {
     width: min(1120px, 100%);
     margin: 0 auto;
-    padding: clamp(18px, 4vw, 38px);
-    background: var(--caa-bg);
-    border: 1px solid rgba(14, 56, 73, 0.12);
-    border-radius: 8px;
-  }
-
-  .caa-map-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 18px;
-    align-items: end;
-    margin-bottom: clamp(18px, 3vw, 28px);
-  }
-
-  .caa-map-kicker {
-    margin: 0 0 6px;
-    color: #1a6f77;
-    font-size: 0.84rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0;
-  }
-
-  .caa-map-header h2 {
-    margin: 0;
-    font-size: clamp(1.35rem, 2.6vw, 2rem);
-    line-height: 1.18;
-    letter-spacing: 0;
-  }
-
-  .caa-map-subtitle {
-    margin: 0;
-    color: var(--caa-muted);
-    font-size: 0.98rem;
-    line-height: 1.4;
-    text-align: right;
+    padding: clamp(8px, 2vw, 18px) 0;
+    background: transparent;
   }
 
   .caa-map-layout {
@@ -135,23 +87,17 @@
     stroke-linecap: round;
     vector-effect: non-scaling-stroke;
     shape-rendering: geometricPrecision;
-    cursor: pointer;
+    cursor: default;
     transition: fill 240ms ease, transform 240ms ease, stroke-width 240ms ease;
     transform-box: fill-box;
     transform-origin: center;
   }
 
   .caa-department:hover,
-  .caa-department:focus-visible,
   .caa-department.is-active {
     fill: var(--dept-hover);
     transform: translateY(-2px);
     stroke-width: 2.8;
-  }
-
-  .caa-department:focus-visible {
-    outline: none;
-    stroke: var(--caa-focus);
   }
 
   .caa-map-panel {
@@ -161,11 +107,7 @@
   }
 
   .caa-map-total {
-    padding: 16px 18px;
-    border-left: 4px solid #1a6f77;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 10px 28px rgba(14, 56, 73, 0.08);
+    padding: 2px 0 14px;
   }
 
   .caa-map-total-label,
@@ -204,7 +146,6 @@
     width: 20px;
     height: 20px;
     flex: 0 0 20px;
-    border: 1px solid rgba(14, 56, 73, 0.18);
     border-radius: 4px;
     background: var(--swatch);
   }
@@ -252,14 +193,9 @@
       padding: 18px;
     }
 
-    .caa-map-header,
     .caa-map-layout {
       display: grid;
       grid-template-columns: 1fr;
-    }
-
-    .caa-map-subtitle {
-      text-align: left;
     }
 
     .caa-map-svg {
@@ -468,19 +404,6 @@
     tooltip.setAttribute('aria-hidden', 'true');
   }
 
-  function focusTooltip(element) {
-    const data = element.__caaData;
-    const bounds = element.getBoundingClientRect();
-    tooltip.innerHTML = tooltipHtml(data);
-    tooltip.style.left = Math.min(window.innerWidth - 270, Math.max(10, bounds.left + bounds.width / 2 + 12)) + 'px';
-    tooltip.style.top = Math.max(10, bounds.top + bounds.height / 2) + 'px';
-    tooltip.setAttribute('aria-hidden', 'false');
-    tooltip.classList.add('is-visible');
-    element.classList.add('is-active');
-    activeElement = element;
-    live.textContent = data.name + ', ' + data.total + ' ' + pluralizeResponses(data.total) + '.';
-  }
-
   function renderMap() {
     const total = Object.keys(PARTICIPATION_DATA).reduce(function (sum, code) {
       return sum + Number(PARTICIPATION_DATA[code].total || 0);
@@ -501,21 +424,12 @@
       const level = getLevel(item.total);
       path.setAttribute('data-level', String(level.level));
       path.setAttribute('style', '--dept-color: ' + level.color + '; --dept-hover: ' + level.hover + ';');
-      path.setAttribute('tabindex', '0');
-      path.setAttribute('focusable', 'true');
-      path.setAttribute('role', 'button');
       path.setAttribute('aria-label', item.name + ' : ' + item.total + ' ' + pluralizeResponses(item.total));
       path.__caaData = item;
 
       path.addEventListener('mouseenter', function (event) { showTooltip(path, event); });
       path.addEventListener('mousemove', moveTooltip);
       path.addEventListener('mouseleave', hideTooltip);
-      path.addEventListener('focus', function () { focusTooltip(path); });
-      path.addEventListener('blur', hideTooltip);
-      path.addEventListener('touchstart', function (event) {
-        const touch = event.touches[0];
-        if (touch) showTooltip(path, touch);
-      }, { passive: true });
 
       svgGroup.appendChild(path);
     });
