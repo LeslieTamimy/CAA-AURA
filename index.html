@@ -1,4 +1,4 @@
-<!-- Carte interactive - bloc autonome pour Tilda -->
+﻿<!-- Carte interactive - bloc autonome pour Tilda -->
 <div class="caa-map-widget" id="caa-aura-map">
   <div class="caa-map-shell">
     <div class="caa-map-layout">
@@ -18,10 +18,10 @@
         </div>
 
         <ul class="caa-map-legend" aria-label="Classes de participation">
-          <li><span style="--swatch:#cee9e4"></span>Niveau 1 · 0 à 2 réponses</li>
-          <li><span style="--swatch:#50bbae"></span>Niveau 2 · 3 à 7 réponses</li>
-          <li><span style="--swatch:#1a6f77"></span>Niveau 3 · 8 à 12 réponses</li>
-          <li><span style="--swatch:#0e3849"></span>Niveau 4 · 13 réponses et plus</li>
+          <li><span style="--swatch:#cee9e4"></span>Niveau 1 · 1 à 3 réponses</li>
+          <li><span style="--swatch:#50bbae"></span>Niveau 2 · 4 à 10 réponses</li>
+          <li><span style="--swatch:#1a6f77"></span>Niveau 3 · 13 à 20 réponses</li>
+          <li><span style="--swatch:#0e3849"></span>Niveau 4 · 23 à 36 réponses</li>
         </ul>
       </aside>
     </div>
@@ -225,65 +225,65 @@
     Format attendu : code département -> { name: nom, total: nombre }
   */
   const PARTICIPATION_DATA = {
+  "01": {
+    "name": "Ain",
+    "total": 10
+  },
+  "03": {
+    "name": "Allier",
+    "total": 13
+  },
+  "07": {
+    "name": "Ardèche",
+    "total": 13
+  },
   "15": {
     "name": "Cantal",
     "total": 1
   },
   "26": {
     "name": "Drôme",
-    "total": 13
+    "total": 16
   },
   "38": {
     "name": "Isère",
-    "total": 3
+    "total": 4
   },
   "42": {
     "name": "Loire",
-    "total": 1
+    "total": 7
   },
   "43": {
     "name": "Haute-Loire",
-    "total": 0
+    "total": 2
   },
   "63": {
     "name": "Puy-de-Dôme",
-    "total": 1
+    "total": 3
   },
   "69": {
     "name": "Rhône",
-    "total": 8
+    "total": 36
   },
   "73": {
     "name": "Savoie",
-    "total": 13
+    "total": 23
   },
   "74": {
     "name": "Haute-Savoie",
-    "total": 14
-  },
-  "01": {
-    "name": "Ain",
-    "total": 5
-  },
-  "03": {
-    "name": "Allier",
-    "total": 11
-  },
-  "07": {
-    "name": "Ardèche",
-    "total": 2
+    "total": 20
   }
 };
 
   /*
     Seuils des 4 classes.
-    Le niveau 4 commence à 13 afin d'inclure les deux meilleurs scores et l'égalité à 13.
+    Les seuils sont recalculés à partir des données actualisées ; le niveau 4 inclut les deux meilleurs scores.
   */
   const LEVELS = [
-    { level: 1, min: 0, max: 2, color: '#cee9e4', hover: '#91cec3' },
-    { level: 2, min: 3, max: 7, color: '#50bbae', hover: '#3c9a8e' },
-    { level: 3, min: 8, max: 12, color: '#1a6f77', hover: '#15595f' },
-    { level: 4, min: 13, max: Infinity, color: '#0e3849', hover: '#0b2d3a' }
+    { level: 1, min: 1, max: 3, color: '#cee9e4', hover: '#91cec3' },
+    { level: 2, min: 4, max: 10, color: '#50bbae', hover: '#3c9a8e' },
+    { level: 3, min: 13, max: 20, color: '#1a6f77', hover: '#15595f' },
+    { level: 4, min: 23, max: Infinity, color: '#0e3849', hover: '#0b2d3a' }
   ];
 
   /* Géométrie SVG embarquée : aucun appel réseau côté Tilda. */
