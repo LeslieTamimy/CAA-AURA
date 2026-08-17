@@ -19,9 +19,9 @@
 
         <ul class="caa-map-legend" aria-label="Classes de participation">
           <li><span style="--swatch:#cee9e4"></span>Niveau 1 · 1 à 12 réponses</li>
-          <li><span style="--swatch:#50bbae"></span>Niveau 2 · 17 à 20 réponses</li>
-          <li><span style="--swatch:#1a6f77"></span>Niveau 3 · 22 à 26 réponses</li>
-          <li><span style="--swatch:#0e3849"></span>Niveau 4 · 29 à 50 réponses</li>
+          <li><span style="--swatch:#50bbae"></span>Niveau 2 · 21 à 22 réponses</li>
+          <li><span style="--swatch:#1a6f77"></span>Niveau 3 · 24 à 27 réponses</li>
+          <li><span style="--swatch:#0e3849"></span>Niveau 4 · 29 réponses et plus</li>
         </ul>
       </aside>
     </div>
@@ -225,55 +225,19 @@
     Format attendu : code département -> { name: nom, total: nombre }
   */
   const PARTICIPATION_DATA = {
-    "01":  {
-               "name":  "Ain",
-               "total":  20
-           },
-    "03":  {
-               "name":  "Allier",
-               "total":  17
-           },
-    "07":  {
-               "name":  "Ardèche",
-               "total":  26
-           },
-    "15":  {
-               "name":  "Cantal",
-               "total":  1
-           },
-    "26":  {
-               "name":  "Drôme",
-               "total":  19
-           },
-    "38":  {
-               "name":  "Isère",
-               "total":  22
-           },
-    "42":  {
-               "name":  "Loire",
-               "total":  12
-           },
-    "43":  {
-               "name":  "Haute-Loire",
-               "total":  3
-           },
-    "63":  {
-               "name":  "Puy-de-Dôme",
-               "total":  7
-           },
-    "69":  {
-               "name":  "Rhône",
-               "total":  50
-           },
-    "73":  {
-               "name":  "Savoie",
-               "total":  29
-           },
-    "74":  {
-               "name":  "Haute-Savoie",
-               "total":  24
-           }
-};
+    "01": { name: "Ain", total: 22 },
+    "03": { name: "Allier", total: 22 },
+    "07": { name: "Ardèche", total: 27 },
+    "15": { name: "Cantal", total: 1 },
+    "26": { name: "Drôme", total: 21 },
+    "38": { name: "Isère", total: 27 },
+    "42": { name: "Loire", total: 12 },
+    "43": { name: "Haute-Loire", total: 5 },
+    "63": { name: "Puy-de-Dôme", total: 7 },
+    "69": { name: "Rhône", total: 53 },
+    "73": { name: "Savoie", total: 29 },
+    "74": { name: "Haute-Savoie", total: 24 }
+  };
 
   /*
     Seuils des 4 classes.
@@ -281,8 +245,8 @@
   */
   const LEVELS = [
     { level: 1, min: 1, max: 12, color: '#cee9e4', hover: '#91cec3' },
-    { level: 2, min: 17, max: 20, color: '#50bbae', hover: '#3c9a8e' },
-    { level: 3, min: 22, max: 26, color: '#1a6f77', hover: '#15595f' },
+    { level: 2, min: 21, max: 22, color: '#50bbae', hover: '#3c9a8e' },
+    { level: 3, min: 24, max: 27, color: '#1a6f77', hover: '#15595f' },
     { level: 4, min: 29, max: Infinity, color: '#0e3849', hover: '#0b2d3a' }
   ];
 
@@ -440,4 +404,3 @@
   window.addEventListener('resize', hideTooltip);
 })();
 </script>
-
