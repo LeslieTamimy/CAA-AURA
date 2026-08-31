@@ -18,10 +18,10 @@
         </div>
 
         <ul class="caa-map-legend" aria-label="Classes de participation">
-          <li><span style="--swatch:#cee9e4"></span>Niveau 1 · 1 à 13 réponses</li>
-          <li><span style="--swatch:#50bbae"></span>Niveau 2 · 21 à 22 réponses</li>
-          <li><span style="--swatch:#1a6f77"></span>Niveau 3 · 24 à 29 réponses</li>
-          <li><span style="--swatch:#0e3849"></span>Niveau 4 · 32 réponses et plus</li>
+          <li><span style="--swatch:#cee9e4"></span>Niveau 1 · 1 à 9 réponses</li>
+          <li><span style="--swatch:#50bbae"></span>Niveau 2 · 15 à 19 réponses</li>
+          <li><span style="--swatch:#1a6f77"></span>Niveau 3 · 20 à 23 réponses</li>
+          <li><span style="--swatch:#0e3849"></span>Niveau 4 · 26 réponses et plus</li>
         </ul>
       </aside>
     </div>
@@ -225,18 +225,18 @@
     Format attendu : code département -> { name: nom, total: nombre }
   */
   const PARTICIPATION_DATA = {
-    "01": { name: "Ain", total: 22 },
-    "03": { name: "Allier", total: 22 },
-    "07": { name: "Ardèche", total: 27 },
+    "01": { name: "Ain", total: 20 },
+    "03": { name: "Allier", total: 15 },
+    "07": { name: "Ardèche", total: 19 },
     "15": { name: "Cantal", total: 1 },
-    "26": { name: "Drôme", total: 21 },
-    "38": { name: "Isère", total: 29 },
-    "42": { name: "Loire", total: 13 },
-    "43": { name: "Haute-Loire", total: 5 },
+    "26": { name: "Drôme", total: 18 },
+    "38": { name: "Isère", total: 23 },
+    "42": { name: "Loire", total: 9 },
+    "43": { name: "Haute-Loire", total: 4 },
     "63": { name: "Puy-de-Dôme", total: 7 },
-    "69": { name: "Rhône", total: 57 },
-    "73": { name: "Savoie", total: 32 },
-    "74": { name: "Haute-Savoie", total: 24 }
+    "69": { name: "Rhône", total: 49 },
+    "73": { name: "Savoie", total: 26 },
+    "74": { name: "Haute-Savoie", total: 19 }
   };
 
   /*
@@ -244,10 +244,10 @@
     Les seuils sont recalculés à partir des données actualisées ; le niveau 4 inclut les deux meilleurs scores.
   */
   const LEVELS = [
-    { level: 1, min: 1, max: 13, color: '#cee9e4', hover: '#91cec3' },
-    { level: 2, min: 21, max: 22, color: '#50bbae', hover: '#3c9a8e' },
-    { level: 3, min: 24, max: 29, color: '#1a6f77', hover: '#15595f' },
-    { level: 4, min: 32, max: Infinity, color: '#0e3849', hover: '#0b2d3a' }
+    { level: 1, min: 1, max: 9, color: '#cee9e4', hover: '#91cec3' },
+    { level: 2, min: 15, max: 19, color: '#50bbae', hover: '#3c9a8e' },
+    { level: 3, min: 20, max: 23, color: '#1a6f77', hover: '#15595f' },
+    { level: 4, min: 26, max: Infinity, color: '#0e3849', hover: '#0b2d3a' }
   ];
 
   /* Géométrie SVG embarquée : aucun appel réseau côté Tilda. */
@@ -404,3 +404,4 @@
   window.addEventListener('resize', hideTooltip);
 })();
 </script>
+
