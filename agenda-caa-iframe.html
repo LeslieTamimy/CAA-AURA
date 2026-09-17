@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agenda CAA 2026–2027</title>
+  <style>body { margin: 0; background: #ffffff; }</style>
+</head>
+<body>
+<section id="caa-agenda-2026" class="caa-agenda" aria-labelledby="caa-agenda-title">
+  <div class="caa-agenda__inner">
+    <header class="caa-agenda__intro">
+      <h2 id="caa-agenda-title">Agenda CAA 2026–2027</h2>
+      <p>Découvrez les rencontres, conférences et temps d’échange autour de la Communication Alternative et Améliorée.</p>
+    </header>
+
+    <div class="caa-agenda__panel">
+      <div class="caa-agenda__toolbar">
+        <div>
+          <h3 id="caa-agenda-month-title" class="caa-agenda__month-title"></h3>
+        </div>
+        <div class="caa-agenda__navigation">
+          <button type="button" class="caa-agenda__nav-button" id="caa-agenda-prev" aria-label="Mois précédent"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button type="button" class="caa-agenda__today-button" id="caa-agenda-today" aria-label="Revenir au mois en cours" hidden>Mois en cours</button>
+          <button type="button" class="caa-agenda__nav-button" id="caa-agenda-next" aria-label="Mois suivant"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="caa-agenda__legend" aria-label="Légende des modalités">
+        <span class="caa-agenda__legend-item"><span class="caa-agenda__legend-swatch caa-agenda__legend-swatch--online" aria-hidden="true"></span>En ligne / visio</span>
+        <span class="caa-agenda__legend-item"><span class="caa-agenda__legend-swatch caa-agenda__legend-swatch--inperson" aria-hidden="true"></span>En présentiel</span>
+        <span class="caa-agenda__legend-item"><span class="caa-agenda__legend-swatch caa-agenda__legend-swatch--unspecified" aria-hidden="true"></span>Modalité à confirmer</span>
+      </div>
+      <p id="caa-agenda-status" class="caa-agenda__sr-only" role="status" aria-live="polite"></p>
+
+      <div class="caa-agenda__calendar" aria-labelledby="caa-agenda-month-title">
+        <div class="caa-agenda__weekdays" aria-hidden="true">
+          <span>Lundi</span><span>Mardi</span><span>Mercredi</span><span>Jeudi</span><span>Vendredi</span><span>Samedi</span><span>Dimanche</span>
+        </div>
+        <div id="caa-agenda-grid" class="caa-agenda__grid"></div>
+      </div>
+
+      <div class="caa-agenda__mobile-view" aria-labelledby="caa-agenda-mobile-title">
+        <h4 id="caa-agenda-mobile-title">Événements du mois</h4>
+        <div id="caa-agenda-mobile-list"></div>
+      </div>
+    </div>
+
+    <section class="caa-agenda__upcoming" aria-labelledby="caa-agenda-upcoming-title">
+      <div class="caa-agenda__upcoming-header">
+        <p class="caa-agenda__section-label">À venir</p>
+        <h3 id="caa-agenda-upcoming-title">Prochains événements</h3>
+      </div>
+      <div id="caa-agenda-upcoming-list" class="caa-agenda__upcoming-list"></div>
+    </section>
+  </div>
+
+  <div id="caa-agenda-modal" class="caa-agenda__overlay" hidden>
+    <div class="caa-agenda__dialog-shell" role="dialog" aria-modal="true" aria-labelledby="caa-agenda-dialog-title" aria-describedby="caa-agenda-dialog-description" tabindex="-1">
+      <div class="caa-agenda__dialog">
+        <p class="caa-agenda__section-label">Détail de l’événement</p>
+        <h3 id="caa-agenda-dialog-title"></h3>
+        <dl id="caa-agenda-dialog-details" class="caa-agenda__details"></dl>
+        <div id="caa-agenda-dialog-description" class="caa-agenda__description"></div>
+        <div id="caa-agenda-dialog-actions" class="caa-agenda__actions"></div>
+      </div>
+      <button type="button" class="caa-agenda__close" id="caa-agenda-close" aria-label="Fermer la fenêtre d’informations">×</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Tous les sélecteurs restent dans le composant T123. */
+  #caa-agenda-2026 {
+    --caa-ink: #0e3849;
+    --caa-petrol: #1a6f77;
+    --caa-turquoise: #50bbae;
+    --caa-orange: #ff8130;
+    --caa-white: #ffffff;
+    --caa-soft: rgba(80, 187, 174, .13);
+    --caa-soft-strong: rgba(80, 187, 174, .28);
+    --caa-quiet: rgba(14, 56, 73, .06);
+    color: var(--caa-ink);
+    background: var(--caa-white);
+    font-family: "Luciole", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  #caa-agenda-2026 *, #caa-agenda-2026 *::before, #caa-agenda-2026 *::after { box-sizing: border-box; }
+  #caa-agenda-2026 [hidden] { display: none !important; }
+  #caa-agenda-2026 button, #caa-agenda-2026 select, #caa-agenda-2026 a { font: inherit; }
+  #caa-agenda-2026 button, #caa-agenda-2026 select { cursor: pointer; }
+  #caa-agenda-2026 button:focus-visible, #caa-agenda-2026 select:focus-visible, #caa-agenda-2026 a:focus-visible {
+    outline: none;
+    color: var(--caa-white);
+    background: var(--caa-ink);
+    text-decoration: underline;
+  }
+  #caa-agenda-2026 .caa-agenda__inner { max-width: 1200px; margin: 0 auto; padding: 56px 24px 80px; }
+  #caa-agenda-2026 h2, #caa-agenda-2026 h3, #caa-agenda-2026 h4, #caa-agenda-2026 p { margin-top: 0; }
+  #caa-agenda-2026 .caa-agenda__intro { max-width: 740px; margin-bottom: 48px; }
+  #caa-agenda-2026 .caa-agenda__section-label { color: var(--caa-petrol); font-size: .875rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px; }
+  #caa-agenda-2026 .caa-agenda__intro h2 { font-size: clamp(2.25rem, 4vw, 3.4rem); line-height: 1.12; margin-bottom: 18px; letter-spacing: -.025em; }
+  #caa-agenda-2026 .caa-agenda__intro > p:last-child { font-size: 1.08rem; line-height: 1.65; margin-bottom: 0; }
+  #caa-agenda-2026 .caa-agenda__panel { background: var(--caa-white); overflow: hidden; }
+  #caa-agenda-2026 .caa-agenda__toolbar { display: flex; flex-direction: column; align-items: stretch; gap: 18px; padding: 0 0 18px; color: var(--caa-ink); background: var(--caa-white); }
+  #caa-agenda-2026 .caa-agenda__month-title { font-size: 1.85rem; line-height: 1.2; margin-bottom: 0; text-transform: capitalize; }
+  #caa-agenda-2026 .caa-agenda__navigation { display: grid; grid-template-columns: 48px minmax(0, 1fr) 48px; align-items: center; gap: 12px; width: 100%; }
+  #caa-agenda-2026 .caa-agenda__nav-button, #caa-agenda-2026 .caa-agenda__today-button { min-height: 48px; padding: 8px 18px; background: var(--caa-petrol); color: var(--caa-white); border: 0; border-radius: 999px; font-weight: 700; }
+  #caa-agenda-2026 .caa-agenda__nav-button { display: inline-grid; place-items: center; width: 48px; padding: 0; }
+  #caa-agenda-2026 #caa-agenda-next { grid-column: 3; justify-self: end; }
+  #caa-agenda-2026 .caa-agenda__today-button { grid-column: 2; justify-self: center; }
+  #caa-agenda-2026 .caa-agenda__nav-button:hover, #caa-agenda-2026 .caa-agenda__today-button:hover { background: var(--caa-ink); color: var(--caa-white); }
+  #caa-agenda-2026 .caa-agenda__nav-button:focus-visible, #caa-agenda-2026 .caa-agenda__today-button:focus-visible { color: var(--caa-white); background: var(--caa-orange); }
+  #caa-agenda-2026 .caa-agenda__nav-button:disabled { cursor: default; opacity: .55; }
+  #caa-agenda-2026 .caa-agenda__legend { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; padding: 0 0 18px; font-size: .875rem; }
+  #caa-agenda-2026 .caa-agenda__legend-item { display: inline-flex; align-items: center; gap: 8px; }
+  #caa-agenda-2026 .caa-agenda__legend-swatch { display: inline-block; flex: none; width: 18px; height: 18px; border-radius: 5px; }
+  #caa-agenda-2026 .caa-agenda__legend-swatch--online { background: rgba(255, 129, 48, .24); }
+  #caa-agenda-2026 .caa-agenda__legend-swatch--inperson { background: rgba(80, 187, 174, .24); }
+  #caa-agenda-2026 .caa-agenda__legend-swatch--unspecified { background: rgba(14, 56, 73, .10); }
+  #caa-agenda-2026 .caa-agenda__weekdays, #caa-agenda-2026 .caa-agenda__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  #caa-agenda-2026 .caa-agenda__grid { gap: 2px; background: var(--caa-quiet); }
+  #caa-agenda-2026 .caa-agenda__weekdays { background: var(--caa-white); color: var(--caa-ink); font-weight: 700; text-align: center; }
+  #caa-agenda-2026 .caa-agenda__weekdays span { padding: 13px 4px; }
+  #caa-agenda-2026 .caa-agenda__day { min-width: 0; min-height: 146px; padding: 13px; background: var(--caa-white); }
+  #caa-agenda-2026 .caa-agenda__day--today .caa-agenda__date { display: table; padding: 2px 7px; color: var(--caa-white); background: var(--caa-petrol); border-radius: 8px; }
+  #caa-agenda-2026 .caa-agenda__date { margin: 0 0 10px; font-size: .95rem; font-weight: 700; }
+  #caa-agenda-2026 .caa-agenda__event { display: block; width: 100%; min-height: 42px; margin: 0 0 6px; padding: 8px; text-align: left; overflow-wrap: anywhere; color: var(--caa-ink); border: 0; border-radius: 8px; line-height: 1.25; }
+  #caa-agenda-2026 .caa-agenda__event--online { background: rgba(255, 129, 48, .24); }
+  #caa-agenda-2026 .caa-agenda__event--online:hover { background: rgba(255, 129, 48, .40); }
+  #caa-agenda-2026 .caa-agenda__event--inperson { background: rgba(80, 187, 174, .24); }
+  #caa-agenda-2026 .caa-agenda__event--inperson:hover { background: rgba(80, 187, 174, .40); }
+  #caa-agenda-2026 .caa-agenda__event--unspecified { background: rgba(14, 56, 73, .10); }
+  #caa-agenda-2026 .caa-agenda__event--unspecified:hover { background: rgba(14, 56, 73, .18); }
+  #caa-agenda-2026 .caa-agenda__event:hover { color: var(--caa-ink); text-decoration: none; }
+  #caa-agenda-2026 .caa-agenda__event:focus-visible { color: var(--caa-white); background: var(--caa-ink); text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 3px; }
+  #caa-agenda-2026 .caa-agenda__event-title { display: block; font-size: 14px; font-weight: 700; }
+  #caa-agenda-2026 .caa-agenda__more-day { min-height: 38px; padding: 6px 0; color: inherit; background: transparent; border: 0; text-decoration: underline; font-weight: 700; text-align: left; }
+  #caa-agenda-2026 .caa-agenda__more-day:hover { text-decoration: none; }
+  #caa-agenda-2026 .caa-agenda__more-day:focus-visible { color: inherit; background: transparent; text-decoration-thickness: 3px; text-underline-offset: 3px; }
+  #caa-agenda-2026 .caa-agenda__mobile-view { display: none; padding: 24px; }
+  #caa-agenda-2026 .caa-agenda__mobile-view h4 { font-size: 1.25rem; margin-bottom: 16px; }
+  #caa-agenda-2026 .caa-agenda__list-item { display: block; width: 100%; padding: 20px 22px; margin-bottom: 12px; text-align: left; color: var(--caa-ink); background: var(--caa-white); border: 0; border-radius: 16px; }
+  #caa-agenda-2026 .caa-agenda__list-item:hover { background: var(--caa-soft-strong); }
+  #caa-agenda-2026 .caa-agenda__list-item--online { background: rgba(255, 129, 48, .18); }
+  #caa-agenda-2026 .caa-agenda__list-item--online:hover { background: rgba(255, 129, 48, .32); }
+  #caa-agenda-2026 .caa-agenda__list-item--inperson { background: rgba(80, 187, 174, .18); }
+  #caa-agenda-2026 .caa-agenda__list-item--inperson:hover { background: rgba(80, 187, 174, .32); }
+  #caa-agenda-2026 .caa-agenda__list-item--unspecified { background: rgba(14, 56, 73, .08); }
+  #caa-agenda-2026 .caa-agenda__list-item--unspecified:hover { background: rgba(14, 56, 73, .16); }
+  #caa-agenda-2026 .caa-agenda__list-item:focus-visible { background: var(--caa-ink); color: var(--caa-white); }
+  #caa-agenda-2026 .caa-agenda__list-item:focus-visible .caa-agenda__list-date { color: var(--caa-white); }
+  #caa-agenda-2026 .caa-agenda__list-date { display: block; color: var(--caa-ink); font-weight: 700; }
+  #caa-agenda-2026 .caa-agenda__list-type { display: block; margin-top: 7px; color: var(--caa-petrol); font-size: .875rem; font-weight: 700; }
+  #caa-agenda-2026 .caa-agenda__list-item:focus-visible .caa-agenda__list-type { color: var(--caa-white); }
+  #caa-agenda-2026 .caa-agenda__list-title { display: block; margin: 8px 0; font-size: 1.1rem; line-height: 1.35; font-weight: 700; }
+  #caa-agenda-2026 .caa-agenda__list-meta { display: block; font-size: .94rem; }
+  #caa-agenda-2026 .caa-agenda__empty { margin: 0; padding: 24px; background: var(--caa-soft); border-radius: 16px; }
+  #caa-agenda-2026 .caa-agenda__upcoming { margin-top: 60px; }
+  #caa-agenda-2026 .caa-agenda__upcoming h3 { margin-bottom: 22px; font-size: 1.75rem; }
+  #caa-agenda-2026 .caa-agenda__upcoming-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  #caa-agenda-2026 .caa-agenda__upcoming-list .caa-agenda__list-item { min-height: 188px; margin-bottom: 0; padding: 24px; }
+  #caa-agenda-2026 .caa-agenda__upcoming-list .caa-agenda__list-item:focus-visible { background: var(--caa-ink); }
+  #caa-agenda-2026 .caa-agenda__upcoming-list .caa-agenda__empty { grid-column: 1 / -1; }
+  #caa-agenda-2026 .caa-agenda__overlay { position: fixed; z-index: 2147483000; inset: 0; display: flex; align-items: center; justify-content: center; padding: 34px; background: transparent; backdrop-filter: none; }
+  #caa-agenda-2026 .caa-agenda__dialog-shell { position: relative; width: min(100%, 680px); border-radius: 22px; box-shadow: 0 0 30px rgba(14, 56, 73, .30); }
+  #caa-agenda-2026 .caa-agenda__dialog { max-height: min(84vh, 850px); overflow: auto; padding: 36px; color: var(--caa-ink); background: var(--caa-white); border: 0; border-radius: 22px; }
+  #caa-agenda-2026 .caa-agenda__dialog h3 { max-width: calc(100% - 44px); margin-bottom: 20px; font-size: 1.65rem; line-height: 1.25; }
+  #caa-agenda-2026 .caa-agenda__close { position: absolute; top: -24px; right: -24px; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; color: var(--caa-white); background: var(--caa-orange); border: 0; border-radius: 999px; font-size: 2rem; line-height: 1; }
+  #caa-agenda-2026 .caa-agenda__close:hover { color: var(--caa-white); background: var(--caa-petrol); }
+  #caa-agenda-2026 .caa-agenda__close:focus-visible { color: var(--caa-white); background: var(--caa-orange); transform: scale(1.12); text-decoration: none; }
+  #caa-agenda-2026 .caa-agenda__details { display: grid; grid-template-columns: minmax(120px, 175px) 1fr; gap: 10px 16px; margin: 0 0 22px; }
+  #caa-agenda-2026 .caa-agenda__details dt { font-weight: 700; }
+  #caa-agenda-2026 .caa-agenda__details dd { margin: 0; overflow-wrap: anywhere; }
+  #caa-agenda-2026 .caa-agenda__description { white-space: pre-line; }
+  #caa-agenda-2026 .caa-agenda__description:empty { display: none; }
+  #caa-agenda-2026 .caa-agenda__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; margin-top: 26px; }
+  #caa-agenda-2026 .caa-agenda__cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 10px 22px; color: var(--caa-white); background: var(--caa-orange); border: 0; border-radius: 999px; font-weight: 700; text-decoration: none; }
+  #caa-agenda-2026 .caa-agenda__cta:hover { color: var(--caa-white); background: var(--caa-ink); }
+  #caa-agenda-2026 .caa-agenda__secondary { min-height: 44px; display: inline-flex; align-items: center; color: var(--caa-petrol); font-weight: 700; text-decoration: underline; }
+  #caa-agenda-2026 .caa-agenda__sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  @media (max-width: 1200px) { #caa-agenda-2026 .caa-agenda__inner { padding-left: 20px; padding-right: 20px; } }
+  @media (max-width: 960px) {
+    #caa-agenda-2026 .caa-agenda__toolbar { align-items: stretch; }
+    #caa-agenda-2026 .caa-agenda__upcoming-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #caa-agenda-2026 .caa-agenda__day { min-height: 115px; padding: 6px; }
+    #caa-agenda-2026 .caa-agenda__event { min-height: 36px; padding: 6px; }
+  }
+  @media (max-width: 640px) {
+    #caa-agenda-2026 .caa-agenda__inner { padding: 28px 16px 48px; }
+    #caa-agenda-2026 .caa-agenda__toolbar { padding: 0 0 16px; }
+    #caa-agenda-2026 .caa-agenda__today-button { width: auto; max-width: 100%; }
+    #caa-agenda-2026 .caa-agenda__calendar { display: none; }
+    #caa-agenda-2026 .caa-agenda__mobile-view { display: block; padding: 18px; background: var(--caa-white); }
+    #caa-agenda-2026 .caa-agenda__upcoming-list { grid-template-columns: 1fr; }
+    #caa-agenda-2026 .caa-agenda__dialog { padding: 22px 18px; }
+    #caa-agenda-2026 .caa-agenda__details { grid-template-columns: 1fr; gap: 2px; }
+    #caa-agenda-2026 .caa-agenda__details dd { margin-bottom: 10px; }
+  }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  const root = document.getElementById('caa-agenda-2026');
+  if (!root || root.dataset.caaInitialized === 'true') return;
+  root.dataset.caaInitialized = 'true';
+
+  /* ==========================================================
+     ÉVÉNEMENTS 2026 ET JANVIER 2027 — source : « Evenements CAA 2026 (1).pdf ».
+     Ajoutez, modifiez ou supprimez les objets dans ce tableau.
+     Les champs inconnus restent vides : aucun horaire, lieu précis
+     ou lien d'inscription n'est déduit du document.
+     Dates : AAAA-MM-JJ ; horaires : HH:MM ; janvier 2027 inclus.
+     ========================================================== */
+  const events = [
+    {
+      id: 'caa-2026-09-19-ateliers-savoie', title: 'Matinée d’ateliers pratiques autour de la CAA', shortTitle: 'Ateliers pratiques CAA',
+      startDate: '2026-09-19', startTime: '09:30', endTime: '12:30', format: 'Présentiel', category: 'Atelier',
+      venue: 'La Ravoire, Savoie', organizer: 'Département de la Savoie',
+      description: 'Matinée gratuite destinée aux jeunes adultes ayant des difficultés de communication, aux proches aidants et aux professionnels. Découverte du tapis de discussion et du journal de vie pour expérimenter des stratégies de CAA utilisables au quotidien.',
+      moreInfoUrl: 'https://www.savoie.fr/web/sw_178729/MDPH/MatineedatelierspratiquesautourdelaCommunicationAlternativeetAmelioreeCAA'
+    },
+    {
+      id: 'caa-2026-09-28-atelier-maine-loire', title: 'Atelier découverte de la CAA — Maine-et-Loire', shortTitle: 'Atelier découverte CAA',
+      startDate: '2026-09-28', startTime: '14:00', endTime: '17:00', format: 'Présentiel', category: 'Atelier',
+      venue: 'Maine-et-Loire (49)', organizer: 'CRA Pays de la Loire',
+      description: 'Entrée libre entre 14 h et 17 h pour les personnes avec TSA, leurs proches aidants et les professionnels. Découverte et manipulation d’outils de CAA à son rythme, avec les professionnels présents. Une visite dure environ une heure.',
+      moreInfoUrl: 'https://cra-paysdelaloire.fr/decouvrez-la-caa-communication-alternative-et-amelioree-dans-toute-la-region-au-cra/'
+    },
+    {
+      id: 'caa-2026-10-mois', title: 'Mois international de sensibilisation à la CAA', shortTitle: 'Mois de la CAA',
+      startDate: '2026-10-01', endDate: '2026-10-31', monthOverview: true, format: '', category: 'Sensibilisation',
+      organizer: 'ISAAC International',
+      description: 'Octobre est consacré à la sensibilisation à la Communication Alternative et Améliorée. Le thème international 2026 est « AAC in Everyday Life: Today, Tomorrow, and Beyond » (« La CAA dans la vie quotidienne : aujourd’hui, demain et au-delà »). Ce temps fort rassemble des initiatives distinctes, avec leurs propres lieux et modalités.',
+      moreInfoUrl: 'https://isaac-online.org/english/'
+    },
+    {
+      id: 'caa-2026-10-03-theorie', title: 'Communication Alternative et Améliorée : partie théorique', shortTitle: 'CAA : partie théorique',
+      startDate: '2026-10-03', startTime: '09:00', endTime: '11:00', format: 'Présentiel', category: 'Conférence',
+      venue: 'Maison des Associations', address: '9 rue Vacheresse, Lagny-sur-Marne', city: 'Lagny-sur-Marne', organizer: 'Handmirable',
+      description: 'Première conférence du cycle Handmirable sur la CAA, destinée aux familles et aux professionnels. Tarif annoncé : 5 € pour les familles et 10 € pour les professionnels. Une seconde rencontre, consacrée à la pratique, est prévue le 17 octobre.',
+      registrationUrl: 'https://www.helloasso.com/associations/handmirable/evenements/conference-thematique-la-communication-alternative-amelioree-caa-theori', moreInfoUrl: 'https://www.handmirable.fr/conferences/'
+    },
+    {
+      id: 'caa-2026-10-10-chantons', title: 'Chantons et signons ensemble !',
+      startDate: '2026-10-10', format: 'Distanciel', category: 'Rencontre', organizer: 'ISAAC Francophone',
+      description: 'Rencontre thématique en ligne autour du chant et des signes, proposée pendant le Mois de la CAA. Un moment collectif ouvert aux personnes concernées, aux familles, aux professionnels et à la communauté CAA.',
+      registrationUrl: 'https://isaac-francophone-5cb32840c2855.assoconnect.com/collect/description/754354-o-chantons-et-signons-ensemble-rencontre-thematique-d-isaac-francophone'
+    },
+    {
+      id: 'caa-2026-10-15-intimagir', title: 'Vie intime, affective et sexuelle : communiquer autrement grâce à la CAA', shortTitle: 'Vie intime et CAA',
+      startDate: '2026-10-15', startTime: '13:00', endTime: '14:30', format: 'Distanciel', category: 'Webinaire', organizer: 'Intim’agir Hauts-de-France',
+      description: 'Webinaire pour les professionnels et les proches aidants sur l’expression des envies, des besoins, des choix et des limites grâce à la CAA dans la vie intime, affective et relationnelle. Témoignages et retours d’expérience. Le document ne fournit pas de lien direct d’inscription.',
+      moreInfoUrl: 'https://caa-aura.fr/', moreInfoLabel: 'Consulter le site CAA AuRA'
+    },
+    {
+      id: 'caa-2026-10-15-ades', title: 'Cap vers la Communication Alternative & Améliorée', shortTitle: 'Cap vers la CAA',
+      startDate: '2026-10-15', startTime: '09:00', endTime: '12:30', format: 'Présentiel', category: 'Conférence',
+      venue: 'Lot-et-Garonne (47)', organizer: 'ADES / PRDSL 47',
+      description: 'Matinée consacrée à la Communication Alternative et Améliorée, à ses enjeux et au partage de connaissances et d’expériences. Le programme détaillé est proposé par l’organisateur.',
+      moreInfoUrl: 'https://www.adesformations.fr/post/conf%C3%A9rence-cap-vers-la-communication-alternative-am%C3%A9lior%C3%A9e-jeudi-15-octobre-2026-de-9h-%C3%A0-12h'
+    },
+    {
+      id: 'caa-2026-10-16-atelier-mayenne', title: 'Atelier découverte de la CAA — Mayenne', shortTitle: 'Atelier découverte CAA',
+      startDate: '2026-10-16', startTime: '14:00', endTime: '17:00', format: 'Présentiel', category: 'Atelier',
+      venue: 'Mayenne (53)', organizer: 'CRA Pays de la Loire',
+      description: 'Entrée libre entre 14 h et 17 h. Atelier pour les personnes avec TSA, les proches aidants et les professionnels : manipulation d’outils de CAA et échanges avec les professionnels du CRA. Une découverte dure environ une heure.',
+      moreInfoUrl: 'https://cra-paysdelaloire.fr/decouvrez-la-caa-communication-alternative-et-amelioree-dans-toute-la-region-au-cra/'
+    },
+    {
+      id: 'caa-2026-10-17-pratique', title: 'Communication Alternative et Améliorée : partie pratique', shortTitle: 'CAA : partie pratique',
+      startDate: '2026-10-17', startTime: '14:00', endTime: '16:00', format: 'Présentiel', category: 'Conférence',
+      venue: 'Maison des Associations', address: '9 rue Vacheresse, Lagny-sur-Marne', city: 'Lagny-sur-Marne', organizer: 'Handmirable',
+      description: 'Seconde conférence du cycle Handmirable sur la CAA, consacrée aux situations concrètes et aux pratiques. Pour les familles et les professionnels. Tarif annoncé : 5 € pour les familles et 10 € pour les professionnels.',
+      registrationUrl: 'https://www.helloasso.com/associations/handmirable/evenements/conference-thematique-la-communication-alternative-et-amelioree-caa-pratique', moreInfoUrl: 'https://www.handmirable.fr/conferences/'
+    },
+    {
+      id: 'caa-2026-10-19-isaac-forum', title: 'ISAAC International Forum 2026', shortTitle: 'ISAAC International Forum',
+      startDate: '2026-10-19', endDate: '2026-10-20', format: 'Présentiel', category: 'Forum',
+      venue: 'Zagreb, Croatie', organizer: 'ISAAC International, avec ATAAC',
+      description: 'Première édition de ce forum international consacré à la CAA. Deux journées d’échanges, de connaissances et de collaborations. Intervenants annoncés dans le document : John Costello, Kathryn Drager, Karen Erickson, Lori Geist et Janice Light.',
+      registrationUrl: 'https://conference.isaac-online.org/forum/'
+    },
+    {
+      id: 'caa-2026-10-20-rencontres-vendee', title: 'Les Rencontres de la Communication Alternative Améliorée', shortTitle: 'Rencontres de la CAA',
+      startDate: '2026-10-20', startTime: '10:00', endTime: '17:00', format: 'Présentiel', category: 'Rencontre',
+      venue: 'Lycée Les Établières', city: 'La Roche-sur-Yon', organizer: 'Département de la Vendée',
+      description: 'Accueil dès 9 h ; animations de 10 h à 17 h. Journée gratuite sur inscription autour du message « La CAA, c’est tout le temps, toute la vie, au cœur de la cité ». Ateliers, témoignages et expériences concrètes pour les personnes concernées, les proches et les professionnels.',
+      moreInfoUrl: 'https://www.vendee.fr/agenda/vue-detaillee/Les%20rencontres%20de%20la%20Communication%20Alternative%20Am%C3%A9lior%C3%A9e/204212a4-d6ba-4031-99da-dacccd5c627b?cHash=8546b365187224f483698e8f81640af2'
+    },
+    {
+      id: 'caa-2026-10-21-ataac', title: 'ATAAC 2026',
+      startDate: '2026-10-21', endDate: '2026-10-22', format: 'Présentiel', category: 'Conférence',
+      venue: 'Zagreb, Croatie', organizer: 'ATAAC',
+      description: 'Rendez-vous européen sur les technologies d’assistance et la CAA. Conférences, communications scientifiques, démonstrations, ateliers et exposition sur la littératie, la participation sociale, les technologies d’accès, l’eye-tracking, l’accessibilité numérique et l’intelligence artificielle.',
+      moreInfoUrl: 'https://www.ataac.eu/'
+    },
+    {
+      id: 'caa-2026-10-24-recian', title: 'Webinaire RECIAN / AAC4ALL',
+      startDate: '2026-10-24', format: 'Distanciel', category: 'Webinaire',
+      description: 'Webinaire annoncé autour de la CAA, des technologies et de l’accès aux ressources. Le document indique que le programme, l’horaire et le formulaire d’inscription restent à confirmer.',
+      moreInfoUrl: 'https://www.aac4all.org/', moreInfoLabel: 'Découvrir AAC4ALL'
+    },
+    {
+      id: 'caa-2026-10-30-symposium-hug', title: 'Communiquer autrement, participer pleinement : les nouveaux horizons de la CAA', shortTitle: 'Symposium CAA — Genève',
+      startDate: '2026-10-30', startTime: '13:00', endTime: '19:30', format: 'Présentiel', category: 'Symposium',
+      venue: 'Maison de l’enfance et de l’adolescence', city: 'Genève, Suisse', organizer: 'Hôpitaux universitaires de Genève et Centre qap',
+      description: 'Symposium gratuit sur inscription consacré aux nouveaux horizons de la CAA : cadre légal, expériences des familles, école, collaboration professionnelle et recherche. Témoignages de parents et d’enfants. Projection du film Le Silence de Mélodie à partir de 17 h 30.',
+      registrationUrl: 'https://www.hug.ch/symposium-horizons-CAA'
+    },
+    {
+      id: 'caa-2026-11-03-autodetermination', title: 'Autodétermination et Communication Alternative et Améliorée', shortTitle: 'Autodétermination et CAA',
+      startDate: '2026-11-03', format: '', category: 'Journée thématique',
+      description: 'Journée professionnelle consacrée aux liens entre CAA et autodétermination : expression des choix, des préférences, des besoins ou des refus, participation aux décisions et pouvoir d’agir. Lieu, horaires et modalités ne sont pas précisés dans le document.',
+      moreInfoUrl: 'https://caa-aura.fr/', moreInfoLabel: 'Consulter le site CAA AuRA'
+    },
+    {
+      id: 'caa-2026-11-10-isaac-virtual', title: 'ISAAC Virtual Conference 2026', shortTitle: 'ISAAC Virtual Conference',
+      startDate: '2026-11-10', endDate: '2026-11-11', format: 'Distanciel', category: 'Conférence', organizer: 'ISAAC International',
+      description: 'Conférence virtuelle internationale sur le thème « AAC in Everyday Life: Today, Tomorrow, and Beyond ». Sessions interactives, tables rondes, présentations et posters sur l’accès à la communication, l’autodétermination, la santé mentale, l’éducation et les innovations. Le document annonce des inscriptions anticipées jusqu’au 31 octobre 2026.',
+      registrationUrl: 'https://conference.isaac-online.org/virtual/'
+    },
+    {
+      id: 'caa-2026-11-24-restitution', title: 'Restitution de l’état des lieux régional autour de la CAA', shortTitle: 'Restitution régionale CAA',
+      startDate: '2026-11-24', format: '', category: 'Restitution', venue: 'Auvergne-Rhône-Alpes',
+      description: 'Temps de restitution annoncé autour de l’état des lieux régional de la CAA : pratiques, ressources, besoins, freins, leviers et dynamiques territoriales. Le document ne confirme pas de lieu précis, d’horaire ni de modalités d’inscription.',
+      moreInfoUrl: 'https://caa-aura.fr/', moreInfoLabel: 'Consulter le site CAA AuRA'
+    },
+    {
+      id: 'caa-2026-11-28-tnd-theorie', title: 'Les troubles neurodéveloppementaux : partie théorique', shortTitle: 'TND : partie théorique',
+      startDate: '2026-11-28', format: 'Présentiel', category: 'Événement connexe',
+      venue: 'Maison des Associations', city: 'Lagny-sur-Marne', organizer: 'Handmirable',
+      description: 'Conférence sur la détection des troubles dys, du TDAH et de l’autisme. Tarif annoncé : 5 € pour les familles et 10 € pour les professionnels. Le document précise que la CAA n’est pas explicitement annoncée comme thème de cette conférence.',
+      moreInfoUrl: 'https://www.handmirable.fr/conferences/'
+    },
+    {
+      id: 'caa-2026-12-11-ari', title: 'Conférence d’Albert Moukheiber — 40 ans de l’ARI', shortTitle: 'Conférence Albert Moukheiber',
+      startDate: '2026-12-11', format: 'Présentiel', category: 'Événement connexe',
+      venue: 'Marseille', organizer: 'ARI',
+      description: 'Conférence clôturant les 40 ans de l’ARI. La programmation de l’année porte notamment sur la communication, la CAA, l’autonomie et l’autodétermination. Le document indique que cette conférence n’est pas exclusivement consacrée à la CAA ; les modalités d’inscription restent à confirmer.',
+      moreInfoUrl: 'https://www.ari.asso.fr/actualites/dernieres-actualites/en-2026-lari-fete-ses-40-ans-'
+    },
+    {
+      id: 'caa-2026-12-12-tnd-pratique', title: 'Les troubles neurodéveloppementaux : partie pratique', shortTitle: 'TND : partie pratique',
+      startDate: '2026-12-12', format: 'Présentiel', category: 'Événement connexe',
+      venue: 'Maison des Associations', city: 'Lagny-sur-Marne', organizer: 'Handmirable',
+      description: 'Suite pratique de la conférence du 28 novembre sur les outils d’accompagnement des enfants à la maison et à l’école. Tarif annoncé : 5 € pour les familles et 10 € pour les professionnels. La CAA n’est pas explicitement mentionnée dans le thème officiel.',
+      moreInfoUrl: 'https://www.handmirable.fr/conferences/'
+    },
+    {
+      id: 'caa-2026-12-18-atelier-loire-atlantique', title: 'Atelier découverte de la CAA — Loire-Atlantique', shortTitle: 'Atelier découverte CAA',
+      startDate: '2026-12-18', startTime: '14:00', endTime: '17:00', format: 'Présentiel', category: 'Atelier',
+      venue: 'Loire-Atlantique (44)', organizer: 'CRA Pays de la Loire',
+      description: 'Entrée libre entre 14 h et 17 h pour les personnes avec TSA, les proches aidants et les professionnels. Découverte et manipulation d’outils de CAA, avec les professionnels présents. Une visite dure environ une heure.',
+      moreInfoUrl: 'https://cra-paysdelaloire.fr/decouvrez-la-caa-communication-alternative-et-amelioree-dans-toute-la-region-au-cra/'
+    },
+    {
+      id: 'caa-2027-01-09-quotidien-theorie', title: 'Outils pour gérer le quotidien à la maison et en classe — partie théorique', shortTitle: 'Outils du quotidien : théorie',
+      startDate: '2027-01-09', format: 'Présentiel', category: 'Événement connexe',
+      venue: 'Maison des Associations', city: 'Lagny-sur-Marne', organizer: 'Handmirable',
+      description: 'Conférence destinée aux familles et aux professionnels, consacrée aux outils pour faciliter le quotidien d’un enfant en situation de handicap à la maison et en classe. Cette première rencontre porte sur la théorie ; la partie pratique est prévue le 23 janvier. La CAA n’est pas explicitement mentionnée comme thème de la conférence.',
+      moreInfoUrl: 'https://www.handmirable.fr/conferences/'
+    },
+    {
+      id: 'caa-2027-01-21-cafe-aqoa', title: 'Café-rencontre « Explorer et intégrer la CAA au quotidien »', shortTitle: 'Café-rencontre CAA',
+      startDate: '2027-01-21', startTime: '12:00', endTime: '13:00', timeZoneLabel: 'heure du Québec', format: 'Distanciel', category: 'Café-rencontre',
+      venue: 'Zoom', organizer: 'AQOA',
+      description: 'Rencontre en ligne animée par Kim Côté pour les orthophonistes et les membres de l’AQOA. Échanges sur les difficultés rencontrées dans la pratique et sur l’intégration concrète de la CAA au quotidien. Activité gratuite pour les membres de l’AQOA ; un différé leur sera accessible après le direct. Horaire indiqué en heure du Québec.',
+      moreInfoUrl: 'https://www.aqoa.qc.ca/fr/evenements-details/detail/cafe-rencontre-explorer-et-integrer-la-communication-alternative-et-amelioree-au-quotidien/85937'
+    },
+    {
+      id: 'caa-2027-01-23-quotidien-pratique', title: 'Outils pour gérer le quotidien à la maison et en classe — partie pratique', shortTitle: 'Outils du quotidien : pratique',
+      startDate: '2027-01-23', format: 'Présentiel', category: 'Événement connexe',
+      venue: 'Maison des Associations', city: 'Lagny-sur-Marne', organizer: 'Handmirable',
+      description: 'Deuxième rencontre du cycle Handmirable sur les outils pour accompagner le quotidien d’un enfant en situation de handicap, à la maison et en classe. Cette séance constitue la partie pratique de la conférence du 9 janvier. La CAA n’est pas explicitement mentionnée comme thème de la conférence.',
+      moreInfoUrl: 'https://www.handmirable.fr/conferences/'
+    }
+  ];
+
+  const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+  const LAST_MONTH_INDEX = 12; // De janvier 2026 à janvier 2027 inclus.
+  function monthIndex(date) {
+    const index = (date.getFullYear() - 2026) * 12 + date.getMonth();
+    return index >= 0 && index <= LAST_MONTH_INDEX ? index : null;
+  }
+  function monthLabel(index) { return MONTHS[index % 12] + ' ' + (2026 + Math.floor(index / 12)); }
+  let today = new Date();
+  let currentMonth = monthIndex(today);
+  let selectedMonth = currentMonth === null ? (today.getFullYear() > 2027 || today.getFullYear() === 2027 && today.getMonth() > 0 ? LAST_MONTH_INDEX : 0) : currentMonth;
+  let expandedDay = '';
+  let opener = null;
+  const els = {
+    title: root.querySelector('#caa-agenda-month-title'),
+    prev: root.querySelector('#caa-agenda-prev'), next: root.querySelector('#caa-agenda-next'),
+    today: root.querySelector('#caa-agenda-today'), grid: root.querySelector('#caa-agenda-grid'),
+    mobile: root.querySelector('#caa-agenda-mobile-list'), upcoming: root.querySelector('#caa-agenda-upcoming-list'),
+    status: root.querySelector('#caa-agenda-status'), overlay: root.querySelector('#caa-agenda-modal'),
+    dialog: root.querySelector('.caa-agenda__dialog-shell'), close: root.querySelector('#caa-agenda-close'),
+    dialogTitle: root.querySelector('#caa-agenda-dialog-title'), details: root.querySelector('#caa-agenda-dialog-details'),
+    description: root.querySelector('#caa-agenda-dialog-description'), actions: root.querySelector('#caa-agenda-dialog-actions')
+  };
+
+  /* Dates en UTC pour éviter les décalages liés aux fuseaux horaires. */
+  function parseDate(value) {
+    if (!/^(?:2026-\d{2}|2027-01)-\d{2}$/.test(value || '')) return null;
+    const date = new Date(value + 'T12:00:00Z');
+    return Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value ? null : date;
+  }
+  function iso(date) { return date.toISOString().slice(0, 10); }
+  function dateText(value, options) { return new Intl.DateTimeFormat('fr-FR', Object.assign({ timeZone: 'UTC' }, options)).format(parseDate(value)); }
+  function dateRange(event) {
+    const start = dateText(event.startDate, { day: 'numeric', month: 'long', year: 'numeric' });
+    return event.endDate && event.endDate !== event.startDate
+      ? 'Du ' + start + ' au ' + dateText(event.endDate, { day: 'numeric', month: 'long', year: 'numeric' })
+      : dateText(event.startDate, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  function timeText(event) {
+    let value = '';
+    if (event.startTime && event.endTime) value = event.startTime + ' – ' + event.endTime;
+    else if (event.startTime) value = 'À partir de ' + event.startTime;
+    else if (event.endTime) value = 'Jusqu’à ' + event.endTime;
+    return value && event.timeZoneLabel ? value + ' (' + event.timeZoneLabel + ')' : value;
+  }
+  function formatKind(event) {
+    return event.format === 'Distanciel' ? 'online' : event.format === 'Présentiel' ? 'inperson' : 'unspecified';
+  }
+  function occursOnDay(event, key) {
+    return event.monthOverview ? event.startDate === key : event.startDate <= key && (event.endDate || event.startDate) >= key;
+  }
+  function locationText(event) { return event.format === 'Distanciel' ? 'En ligne' : event.venue || ''; }
+  function validUrl(value) {
+    try { const url = new URL(value); return /^https?:$/.test(url.protocol) ? url.href : ''; }
+    catch (_) { return ''; }
+  }
+
+  const sortedEvents = events.filter(function (event) {
+    const start = parseDate(event.startDate);
+    const end = parseDate(event.endDate || event.startDate);
+    return event.id && event.title && start && end && end >= start;
+  }).sort(function (a, b) {
+    return a.startDate.localeCompare(b.startDate) || (a.startTime || '').localeCompare(b.startTime || '');
+  });
+  const byId = new Map(sortedEvents.map(function (event) { return [event.id, event]; }));
+  const monthEvents = function () {
+    const first = iso(new Date(Date.UTC(2026, selectedMonth, 1, 12)));
+    const last = iso(new Date(Date.UTC(2026, selectedMonth + 1, 0, 12)));
+    return sortedEvents.filter(function (event) {
+      return event.startDate <= last && (event.endDate || event.startDate) >= first;
+    });
+  };
+
+  /* Affichage : boutons créés par DOM, textes injectés avec textContent. */
+  function makeEventButton(event, variant) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.eventId = event.id;
+    button.className = variant === 'calendar' ? 'caa-agenda__event caa-agenda__event--' + formatKind(event) : 'caa-agenda__list-item caa-agenda__list-item--' + formatKind(event);
+    button.setAttribute('aria-label', event.title + ', ' + dateRange(event) + ', ' + (event.category || 'Autre événement') + ', ' + (event.format || 'modalité à confirmer'));
+    if (variant === 'calendar') {
+      const title = document.createElement('span'); title.className = 'caa-agenda__event-title'; title.textContent = event.shortTitle || event.title;
+      button.append(title);
+    } else {
+      const date = document.createElement('span'); date.className = 'caa-agenda__list-date'; date.textContent = [dateRange(event), timeText(event)].filter(Boolean).join(' · ');
+      const type = document.createElement('span'); type.className = 'caa-agenda__list-type'; type.textContent = (event.category || 'Autre événement') + ' · ' + (event.format || 'Modalité à confirmer');
+      const title = document.createElement('span'); title.className = 'caa-agenda__list-title'; title.textContent = event.title;
+      button.append(date, type, title);
+      const place = locationText(event);
+      if (place) { const meta = document.createElement('span'); meta.className = 'caa-agenda__list-meta'; meta.textContent = place; button.append(meta); }
+    }
+    return button;
+  }
+  function emptyMessage(text) { const p = document.createElement('p'); p.className = 'caa-agenda__empty'; p.textContent = text; return p; }
+  function renderCalendar(visible) {
+    els.grid.replaceChildren();
+    const firstDay = new Date(Date.UTC(2026, selectedMonth, 1, 12));
+    const leading = (firstDay.getUTCDay() + 6) % 7;
+    const days = new Date(Date.UTC(2026, selectedMonth + 1, 0, 12)).getUTCDate();
+    const total = Math.ceil((leading + days) / 7) * 7;
+    const fragment = document.createDocumentFragment();
+    for (let cell = 0; cell < total; cell++) {
+      const number = cell - leading + 1;
+      const day = document.createElement('div');
+      day.className = 'caa-agenda__day';
+      if (number < 1 || number > days) { day.classList.add('caa-agenda__day--outside'); fragment.append(day); continue; }
+      const key = iso(new Date(Date.UTC(2026, selectedMonth, number, 12)));
+      if (monthIndex(today) === selectedMonth && today.getDate() === number) day.classList.add('caa-agenda__day--today');
+      const date = document.createElement('p'); date.className = 'caa-agenda__date'; date.textContent = String(number);
+      if (day.classList.contains('caa-agenda__day--today')) {
+        const screenReaderLabel = document.createElement('span');
+        screenReaderLabel.className = 'caa-agenda__sr-only';
+        screenReaderLabel.textContent = ' — aujourd’hui';
+        date.append(screenReaderLabel);
+      }
+      day.append(date);
+      const matches = visible.filter(function (event) { return occursOnDay(event, key); });
+      if (matches.length) {
+        // Si plusieurs modalités coexistent, chacune occupe son propre aplat de couleur.
+        const kinds = Array.from(new Set(matches.map(formatKind)));
+        const shown = expandedDay === key ? matches : kinds.length > 1
+          ? kinds.slice(0, 2).map(function (kind) { return matches.find(function (event) { return formatKind(event) === kind; }); })
+          : matches.slice(0, 2);
+        let destination = day;
+        if (kinds.length > 1) {
+          day.classList.add('caa-agenda__day--mixed');
+          const segments = document.createElement('div'); segments.className = 'caa-agenda__segments';
+          Array.from(new Set(shown.map(formatKind))).forEach(function (kind) {
+            const segment = document.createElement('div'); segment.className = 'caa-agenda__segment caa-agenda__segment--' + kind;
+            shown.filter(function (event) { return formatKind(event) === kind; }).forEach(function (event) { segment.append(makeEventButton(event, 'calendar')); });
+            segments.append(segment);
+          });
+          day.append(segments);
+          destination = segments.lastElementChild;
+        } else {
+          day.classList.add('caa-agenda__day--' + kinds[0]);
+          shown.forEach(function (event) { day.append(makeEventButton(event, 'calendar')); });
+        }
+        if (matches.length > 2) {
+          const more = document.createElement('button'); more.type = 'button'; more.className = 'caa-agenda__more-day';
+          more.dataset.expandDay = key;
+          more.textContent = expandedDay === key ? 'Voir moins' : '+' + (matches.length - shown.length) + ' autres événements';
+          more.setAttribute('aria-expanded', String(expandedDay === key));
+          more.setAttribute('aria-label', (expandedDay === key ? 'Voir moins d’événements' : 'Afficher ' + (matches.length - shown.length) + ' autres événements') + ' le ' + number + ' ' + monthLabel(selectedMonth).toLowerCase());
+          destination.append(more);
+        }
+      }
+      fragment.append(day);
+    }
+    els.grid.append(fragment);
+  }
+  function renderList(target, list, emptyText) {
+    target.replaceChildren();
+    if (!list.length) { target.append(emptyMessage(emptyText)); return; }
+    const fragment = document.createDocumentFragment();
+    list.forEach(function (event) { fragment.append(makeEventButton(event, 'list')); });
+    target.append(fragment);
+  }
+  function render() {
+    const visible = monthEvents();
+    els.title.textContent = monthLabel(selectedMonth);
+    els.prev.disabled = selectedMonth === 0;
+    els.next.disabled = selectedMonth === LAST_MONTH_INDEX;
+    els.today.hidden = currentMonth === null || selectedMonth === currentMonth;
+    renderCalendar(visible);
+    renderList(els.mobile, visible, 'Aucun événement pour ce mois.');
+    const todayKey = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, '0'), String(today.getDate()).padStart(2, '0')].join('-');
+    const upcoming = sortedEvents.filter(function (event) { return (event.endDate || event.startDate) >= todayKey; }).slice(0, 3);
+    renderList(els.upcoming, upcoming, 'Aucun prochain événement.');
+    els.status.textContent = monthLabel(selectedMonth) + ' : ' + visible.length + ' événement' + (visible.length > 1 ? 's' : '') + ' affiché' + (visible.length > 1 ? 's' : '') + '.';
+  }
+
+  /* Navigation de janvier 2026 à janvier 2027. */
+  els.prev.addEventListener('click', function () { if (selectedMonth > 0) { selectedMonth--; expandedDay = ''; render(); } });
+  els.next.addEventListener('click', function () { if (selectedMonth < LAST_MONTH_INDEX) { selectedMonth++; expandedDay = ''; render(); } });
+  els.today.addEventListener('click', function () { if (currentMonth !== null) { selectedMonth = currentMonth; expandedDay = ''; render(); } });
+
+  /* Modale : seules les données présentes produisent une ligne. */
+  function addDetail(label, value) {
+    if (!value) return;
+    const dt = document.createElement('dt'); dt.textContent = label;
+    const dd = document.createElement('dd'); dd.textContent = value;
+    els.details.append(dt, dd);
+  }
+  function addAction(label, url, className) {
+    const safe = validUrl(url);
+    if (!safe) return;
+    const link = document.createElement('a'); link.href = safe; link.target = '_blank'; link.rel = 'noopener noreferrer';
+    link.className = className; link.textContent = label;
+    link.setAttribute('aria-label', label + ' (nouvel onglet)');
+    els.actions.append(link);
+  }
+  function openModal(event, trigger) {
+    opener = trigger;
+    els.dialogTitle.textContent = event.title;
+    els.details.replaceChildren();
+    addDetail(timeText(event) ? 'Date et horaires' : 'Date', [dateRange(event), timeText(event)].filter(Boolean).join(' · '));
+    addDetail('Type d’événement', event.category);
+    addDetail('Organisateur', event.organizer);
+    addDetail('Lieu', event.format === 'Distanciel' ? 'En ligne' : event.venue);
+    addDetail('Adresse', event.address);
+    els.description.textContent = event.description || '';
+    els.actions.replaceChildren();
+    addAction('S’inscrire à l’événement', event.registrationUrl, 'caa-agenda__cta');
+    addAction(event.moreInfoLabel || 'En savoir plus', event.moreInfoUrl, 'caa-agenda__secondary');
+    /* Un lien utile reste disponible même pour un futur événement sans URL publiée. */
+    if (!els.actions.children.length) addAction('Consulter le site CAA AuRA', 'https://caa-aura.fr/', 'caa-agenda__secondary');
+    els.overlay.hidden = false;
+    els.close.focus();
+  }
+  function closeModal() {
+    if (els.overlay.hidden) return;
+    els.overlay.hidden = true;
+    if (opener && opener.isConnected) opener.focus();
+    opener = null;
+  }
+  root.addEventListener('click', function (event) {
+    const eventButton = event.target.closest('[data-event-id]');
+    if (eventButton && root.contains(eventButton)) { const item = byId.get(eventButton.dataset.eventId); if (item) openModal(item, eventButton); return; }
+    const more = event.target.closest('[data-expand-day]');
+    if (more && root.contains(more)) {
+      const key = more.dataset.expandDay;
+      expandedDay = expandedDay === key ? '' : key;
+      renderCalendar(monthEvents());
+      const replacement = Array.from(els.grid.querySelectorAll('[data-expand-day]')).find(function (button) { return button.dataset.expandDay === key; });
+      if (replacement) replacement.focus();
+    }
+  });
+  els.close.addEventListener('click', closeModal);
+  els.overlay.addEventListener('click', function (event) { if (event.target === els.overlay) closeModal(); });
+
+  /* Clavier : Échap, boucle Tab et retour au bouton déclencheur. */
+  document.addEventListener('keydown', function (event) {
+    if (els.overlay.hidden) return;
+    if (event.key === 'Escape') { event.preventDefault(); closeModal(); return; }
+    if (event.key !== 'Tab') return;
+    const focusables = Array.from(els.dialog.querySelectorAll('button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')).filter(function (node) { return !node.hidden; });
+    if (!focusables.length) { event.preventDefault(); els.dialog.focus(); return; }
+    const first = focusables[0], last = focusables[focusables.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !els.dialog.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && (document.activeElement === last || !els.dialog.contains(document.activeElement))) { event.preventDefault(); first.focus(); }
+  });
+  document.addEventListener('focusin', function (event) { if (!els.overlay.hidden && !els.dialog.contains(event.target)) els.close.focus(); });
+
+  /* Actualise le repère du jour et la liste « À venir » après minuit,
+     même si la page reste ouverte. Une reprise d’onglet force aussi la vérification. */
+  let dailyRefreshTimer;
+  function refreshCurrentDay() {
+    const now = new Date();
+    const hasChanged = now.getFullYear() !== today.getFullYear()
+      || now.getMonth() !== today.getMonth() || now.getDate() !== today.getDate();
+    today = now;
+    currentMonth = monthIndex(now);
+    if (hasChanged) render();
+    scheduleDailyRefresh();
+  }
+  function scheduleDailyRefresh() {
+    clearTimeout(dailyRefreshTimer);
+    const now = new Date();
+    const nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 1);
+    dailyRefreshTimer = setTimeout(refreshCurrentDay, nextDay.getTime() - now.getTime());
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') refreshCurrentDay();
+  });
+  render();
+  scheduleDailyRefresh();
+})();
+</script>
+</body>
+</html>
