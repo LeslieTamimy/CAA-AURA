@@ -4,7 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agenda CAA 2026–2027</title>
-  <style>body { margin: 0; background: #ffffff; }</style>
+  <style>
+    body { margin: 0; background: #ffffff; }
+    #caa-agenda-2026.caa-agenda--embedded { position: relative; }
+    #caa-agenda-2026.caa-agenda--embedded .caa-agenda__overlay { position: absolute; align-items: flex-start; }
+  </style>
 </head>
 <body>
 <section id="caa-agenda-2026" class="caa-agenda" aria-labelledby="caa-agenda-title">
@@ -645,6 +649,60 @@
   });
   render();
   scheduleDailyRefresh();
+})();
+</script>
+<script>
+(function () {
+  if (window.parent === window) return;
+  const root = document.getElementById('caa-agenda-2026');
+  const overlay = document.getElementById('caa-agenda-modal');
+  const shell = root.querySelector('.caa-agenda__dialog-shell');
+  const dialog = root.querySelector('.caa-agenda__dialog');
+  root.classList.add('caa-agenda--embedded');
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
+  let viewport = null;
+  let lastHeight = 0;
+
+  function sendHeight() {
+    const height = Math.ceil(root.getBoundingClientRect().height);
+    if (height > 0 && height !== lastHeight) {
+      lastHeight = height;
+      window.parent.postMessage({ type: 'caa-agenda:height', height: height }, '*');
+    }
+  }
+
+  function positionDialog() {
+    if (!viewport || overlay.hidden || viewport.visibleHeight <= 0) return;
+    const total = root.getBoundingClientRect().height;
+    const top = Math.max(0, Math.min(total, Number(viewport.visibleTop) || 0));
+    const visible = Math.max(0, Math.min(total - top, Number(viewport.visibleHeight) || 0));
+    if (!visible) return;
+    dialog.style.maxHeight = Math.max(180, visible - 80) + 'px';
+    const centered = top + (visible - shell.getBoundingClientRect().height) / 2;
+    overlay.style.paddingTop = Math.max(24, Math.min(total - shell.getBoundingClientRect().height - 24, Math.max(top + 24, centered))) + 'px';
+  }
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window.parent || !event.data) return;
+    if (event.data.type === 'caa-agenda:measure') sendHeight();
+    if (event.data.type === 'caa-agenda:viewport') {
+      viewport = event.data;
+      positionDialog();
+    }
+  });
+  new ResizeObserver(sendHeight).observe(root);
+  new MutationObserver(function () {
+    if (!overlay.hidden) {
+      positionDialog();
+      window.parent.postMessage({ type: 'caa-agenda:request-viewport' }, '*');
+    } else {
+      dialog.style.maxHeight = '';
+      overlay.style.paddingTop = '';
+    }
+  }).observe(overlay, { attributes: true, attributeFilter: ['hidden'] });
+  window.addEventListener('load', sendHeight);
+  requestAnimationFrame(sendHeight);
 })();
 </script>
 </body>
