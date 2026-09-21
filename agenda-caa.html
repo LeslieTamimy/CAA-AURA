@@ -666,7 +666,7 @@
   let lastHeight = 0;
 
   function sendHeight() {
-    const height = Math.ceil(root.getBoundingClientRect().height);
+    const height = Math.ceil(Math.max(root.scrollHeight, root.getBoundingClientRect().height)) + 2;
     if (height > 0 && height !== lastHeight) {
       lastHeight = height;
       window.parent.postMessage({ type: 'caa-agenda:height', height: height }, '*');
@@ -693,6 +693,7 @@
     }
   });
   new ResizeObserver(sendHeight).observe(root);
+  new MutationObserver(sendHeight).observe(root, { childList: true, subtree: true, attributes: true, characterData: true });
   new MutationObserver(function () {
     if (!overlay.hidden) {
       positionDialog();
@@ -703,7 +704,12 @@
     }
   }).observe(overlay, { attributes: true, attributeFilter: ['hidden'] });
   window.addEventListener('load', sendHeight);
+  window.addEventListener('resize', sendHeight);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sendHeight);
   requestAnimationFrame(sendHeight);
+  setTimeout(sendHeight, 100);
+  setTimeout(sendHeight, 500);
+  setTimeout(sendHeight, 1500);
 })();
 </script>
 </body>
