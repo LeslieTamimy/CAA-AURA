@@ -38,10 +38,10 @@
         </div>
 
         <ul class="caa-map-legend" aria-label="Classes de participation">
-          <li><span style="--swatch:#cee9e4"></span>Niveau 1 · 11 à 28 réponses</li>
-          <li><span style="--swatch:#50bbae"></span>Niveau 2 · 31 à 48 réponses</li>
-          <li><span style="--swatch:#1a6f77"></span>Niveau 3 · 53 à 67 réponses</li>
-          <li><span style="--swatch:#0e3849"></span>Niveau 4 · 80 réponses et plus</li>
+          <li><span style="--swatch:#cee9e4"></span>Niveau 1 · 18 à 28 réponses</li>
+          <li><span style="--swatch:#50bbae"></span>Niveau 2 · 31 à 63 réponses</li>
+          <li><span style="--swatch:#1a6f77"></span>Niveau 3 · 66 à 71 réponses</li>
+          <li><span style="--swatch:#0e3849"></span>Niveau 4 · 86 réponses et plus</li>
         </ul>
       </aside>
     </div>
@@ -247,16 +247,16 @@
   const PARTICIPATION_DATA = {
     "01": { name: "Ain", total: 32 },
     "03": { name: "Allier", total: 31 },
-    "07": { name: "Ardèche", total: 32 },
-    "15": { name: "Cantal", total: 19 },
+    "07": { name: "Ardèche", total: 33 },
+    "15": { name: "Cantal", total: 20 },
     "26": { name: "Drôme", total: 28 },
-    "38": { name: "Isère", total: 80 },
-    "42": { name: "Loire", total: 67 },
-    "43": { name: "Haute-Loire", total: 23 },
-    "63": { name: "Puy-de-Dôme", total: 11 },
-    "69": { name: "Rhône", total: 165 },
-    "73": { name: "Savoie", total: 53 },
-    "74": { name: "Haute-Savoie", total: 48 }
+    "38": { name: "Isère", total: 86 },
+    "42": { name: "Loire", total: 71 },
+    "43": { name: "Haute-Loire", total: 24 },
+    "63": { name: "Puy-de-Dôme", total: 18 },
+    "69": { name: "Rhône", total: 177 },
+    "73": { name: "Savoie", total: 66 },
+    "74": { name: "Haute-Savoie", total: 63 }
   };
 
   /*
@@ -264,10 +264,10 @@
     Les seuils sont recalculés à partir des données actualisées ; le niveau 4 inclut les deux meilleurs scores.
   */
   const LEVELS = [
-    { level: 1, min: 11, max: 28, color: '#cee9e4', hover: '#91cec3' },
-    { level: 2, min: 31, max: 48, color: '#50bbae', hover: '#3c9a8e' },
-    { level: 3, min: 53, max: 67, color: '#1a6f77', hover: '#15595f' },
-    { level: 4, min: 80, max: Infinity, color: '#0e3849', hover: '#0b2d3a' }
+    { level: 1, min: 18, max: 28, color: '#cee9e4', hover: '#91cec3' },
+    { level: 2, min: 31, max: 63, color: '#50bbae', hover: '#3c9a8e' },
+    { level: 3, min: 66, max: 71, color: '#1a6f77', hover: '#15595f' },
+    { level: 4, min: 86, max: Infinity, color: '#0e3849', hover: '#0b2d3a' }
   ];
 
   /* Géométrie SVG embarquée : aucun appel réseau côté Tilda. */
