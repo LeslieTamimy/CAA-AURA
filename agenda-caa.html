@@ -220,11 +220,11 @@
   root.dataset.caaInitialized = 'true';
 
   /* ==========================================================
-     ÉVÉNEMENTS 2026 ET JANVIER 2027 — source : « Evenements CAA 2026 (1).pdf ».
+     ÉVÉNEMENTS 2026 À FÉVRIER 2027 — sources : documents de veille CAA AuRA.
      Ajoutez, modifiez ou supprimez les objets dans ce tableau.
      Les champs inconnus restent vides : aucun horaire, lieu précis
      ou lien d'inscription n'est déduit du document.
-     Dates : AAAA-MM-JJ ; horaires : HH:MM ; janvier 2027 inclus.
+     Dates : AAAA-MM-JJ ; horaires : HH:MM ; février 2027 inclus.
      ========================================================== */
   const events = [
     {
@@ -303,6 +303,12 @@
       registrationUrl: 'https://conference.isaac-online.org/forum/'
     },
     {
+      id: 'caa-2026-10-20-canotech', title: 'La CAA à l’école : comprendre et adapter les supports', shortTitle: 'La CAA à l’école',
+      startDate: '2026-10-20', startTime: '15:00', endTime: '16:00', format: 'Distanciel', category: 'Webinaire', organizer: 'CanoTech — Réseau Canopé',
+      description: 'Webinaire consacré à la Communication Alternative et Améliorée dans le contexte scolaire. Il présente les principes de la CAA et des outils permettant d’adapter les supports pédagogiques afin de favoriser la communication et les apprentissages.',
+      registrationUrl: 'https://www.canotech.fr/s/34596/la-communication-alternative-et-augmenteeamelioree-caa'
+    },
+    {
       id: 'caa-2026-10-20-rencontres-vendee', title: 'Les Rencontres de la Communication Alternative Améliorée', shortTitle: 'Rencontres de la CAA',
       startDate: '2026-10-20', startTime: '10:00', endTime: '17:00', format: 'Présentiel', category: 'Rencontre',
       venue: 'Lycée Les Établières', city: 'La Roche-sur-Yon', organizer: 'Département de la Vendée',
@@ -317,9 +323,11 @@
       moreInfoUrl: 'https://www.ataac.eu/'
     },
     {
-      id: 'caa-2026-10-24-recian', title: 'Webinaire RECIAN / AAC4ALL',
-      startDate: '2026-10-24', format: 'Distanciel', category: 'Webinaire',
-      description: 'Webinaire annoncé autour de la CAA, des technologies et de l’accès aux ressources. Le document indique que le programme, l’horaire et le formulaire d’inscription restent à confirmer.',
+      id: 'caa-2026-10-22-recian', title: 'Webinaire RECIAN — AAC4ALL',
+      startDate: '2026-10-22', startTime: '12:30', endTime: '13:30', format: 'Distanciel', category: 'Webinaire',
+      venue: 'Microsoft Teams', organizer: 'RECIAN / AAC4ALL',
+      description: 'Webinaire consacré à la Communication Alternative et Améliorée, proposé par les réseaux RECIAN et AAC4ALL.',
+      registrationUrl: 'https://teams.microsoft.com/meet/398087032533152?p=Jo42Ed9CCqj4KNV5wD', registrationLabel: 'Rejoindre la visioconférence',
       moreInfoUrl: 'https://www.aac4all.org/', moreInfoLabel: 'Découvrir AAC4ALL'
     },
     {
@@ -342,10 +350,18 @@
       registrationUrl: 'https://conference.isaac-online.org/virtual/'
     },
     {
-      id: 'caa-2026-11-24-restitution', title: 'Restitution de l’état des lieux régional autour de la CAA', shortTitle: 'Restitution régionale CAA',
-      startDate: '2026-11-24', format: '', category: 'Restitution', venue: 'Auvergne-Rhône-Alpes',
-      description: 'Temps de restitution annoncé autour de l’état des lieux régional de la CAA : pratiques, ressources, besoins, freins, leviers et dynamiques territoriales. Le document ne confirme pas de lieu précis, d’horaire ni de modalités d’inscription.',
-      moreInfoUrl: 'https://caa-aura.fr/', moreInfoLabel: 'Consulter le site CAA AuRA'
+      id: 'caa-2026-11-25-restitution', title: 'Restitution de l’état des lieux régional des pratiques en CAA', shortTitle: 'Restitution régionale CAA',
+      startDate: '2026-11-25', startTime: '14:00', endTime: '16:00', format: 'Distanciel', category: 'Restitution', venue: 'Visioconférence',
+      organizer: 'Les PEP 69 / Métropole de Lyon — Mission régionale CAA AuRA',
+      description: 'Restitution des résultats de l’état des lieux régional des pratiques en Communication Alternative et Améliorée. Cette rencontre permettra de partager les premiers enseignements de l’enquête menée auprès des établissements et des professionnels. Les modalités de participation et le programme détaillé seront communiqués ultérieurement.',
+      moreInfoUrl: 'https://www.lespep69.org/2026/06/mission-speciale-communication-alternative-amelioree/', moreInfoLabel: 'Découvrir la mission régionale'
+    },
+    {
+      id: 'caa-2026-11-25-sensibilisation-erhr', title: 'Sensibilisation à la Communication Alternative et Améliorée', shortTitle: 'Sensibilisation à la CAA',
+      startDate: '2026-11-25', startTime: '12:00', endTime: '13:00', format: 'Distanciel', category: 'Sensibilisation', venue: 'Visioconférence',
+      organizer: 'Équipe relais handicaps rares Occitanie',
+      description: 'Temps de sensibilisation pour comprendre la CAA, découvrir comment elle soutient l’expression, la compréhension, la participation et l’autodétermination, puis identifier des outils, de bonnes pratiques et les ressources disponibles sur les territoires.',
+      moreInfoUrl: 'https://portail-addictions-occitanie.fr/evenement/sensibilisation-a-la-communication-alternative-et-amelioree-erhr-occitanie-visio/', moreInfoLabel: 'Informations et inscription'
     },
     {
       id: 'caa-2026-11-28-tnd-theorie', title: 'Les troubles neurodéveloppementaux : partie théorique', shortTitle: 'TND : partie théorique',
@@ -353,6 +369,13 @@
       venue: 'Maison des Associations', city: 'Lagny-sur-Marne', organizer: 'Handmirable',
       description: 'Conférence sur la détection des troubles dys, du TDAH et de l’autisme. Tarif annoncé : 5 € pour les familles et 10 € pour les professionnels. Le document précise que la CAA n’est pas explicitement annoncée comme thème de cette conférence.',
       moreInfoUrl: 'https://www.handmirable.fr/conferences/'
+    },
+    {
+      id: 'caa-2026-12-01-inclutec', title: 'CAA : comprendre et implémenter dans tous les environnements', shortTitle: 'Implémenter la CAA',
+      startDate: '2026-12-01', endDate: '2026-12-03', format: 'Présentiel', category: 'Formation', organizer: 'INCLUTEC',
+      description: 'Formation de trois jours destinée notamment aux professionnels du médico-social, de l’éducation et de la santé. Elle aborde l’évaluation des besoins, le choix des outils, la conception de projets individualisés et l’intégration de la CAA dans les différents environnements de vie.',
+      registrationUrl: 'https://inclutec.catalogueformpro.com/0/communication-alternative-amelioree/2040055/3-caa-comprendre-et-implementer-dans-tous-les-environnements/registration?registration%5Btraining_session_id%5D=2899337',
+      moreInfoUrl: 'https://inclutec.catalogueformpro.com/0/communication-alternative-amelioree/2040055/3-caa-comprendre-et-implementer-dans-tous-les-environnements'
     },
     {
       id: 'caa-2026-12-11-ari', title: 'Conférence d’Albert Moukheiber — 40 ans de l’ARI', shortTitle: 'Conférence Albert Moukheiber',
@@ -367,6 +390,13 @@
       venue: 'Maison des Associations', city: 'Lagny-sur-Marne', organizer: 'Handmirable',
       description: 'Suite pratique de la conférence du 28 novembre sur les outils d’accompagnement des enfants à la maison et à l’école. Tarif annoncé : 5 € pour les familles et 10 € pour les professionnels. La CAA n’est pas explicitement mentionnée dans le thème officiel.',
       moreInfoUrl: 'https://www.handmirable.fr/conferences/'
+    },
+    {
+      id: 'caa-2026-12-12-jouer', title: 'Jouer en CAA : après-midi jeux', shortTitle: 'Jouer en CAA',
+      startDate: '2026-12-12', startTime: '15:00', endTime: '17:00', format: 'Présentiel', category: 'Animation',
+      venue: 'Bibliothèque du 2e arrondissement', address: '13 rue de Condé, 69002 Lyon', city: 'Lyon', organizer: 'Bibliothèque municipale de Lyon, avec GEMPartage',
+      description: 'Après-midi gratuit et en entrée libre, à partir de 7 ans avec un adulte, dans le cadre de la Quinzaine des handicaps 2026. Les participants redécouvriront des jeux de société classiques à l’aide de tableaux de langage assisté. L’animation, menée par Pauline Nancy et Dany Mialhe du GEMPartage, se terminera par un quiz collectif sur la CAA.',
+      moreInfoUrl: 'https://www.bm-lyon.fr/agenda/apres-midi-jeux-1'
     },
     {
       id: 'caa-2026-12-18-atelier-loire-atlantique', title: 'Atelier découverte de la CAA — Loire-Atlantique', shortTitle: 'Atelier découverte CAA',
@@ -390,16 +420,30 @@
       moreInfoUrl: 'https://www.aqoa.qc.ca/fr/evenements-details/detail/cafe-rencontre-explorer-et-integrer-la-communication-alternative-et-amelioree-au-quotidien/85937'
     },
     {
+      id: 'caa-2027-01-21-iatp', title: 'Évaluation et choix des équipements AT/AAC', shortTitle: 'Équipements AT/AAC',
+      startDate: '2027-01-21', startTime: '12:00', endTime: '12:30', timeZoneLabel: 'heure du Centre nord-américain (CST)', format: 'Distanciel', category: 'Webinaire',
+      venue: 'En ligne', organizer: 'Illinois Assistive Technology Program (IATP)',
+      description: 'Webinaire en anglais sur l’évaluation des besoins en technologies d’assistance et en Communication Alternative et Augmentée. La présentation abordera le déroulement d’une évaluation et les étapes permettant d’obtenir un équipement AT/AAC adapté.',
+      registrationUrl: 'https://us06web.zoom.us/webinar/register/WN_Itg1dQTnTD-4cOm8nLnbnQ',
+      moreInfoUrl: 'https://iltech.org/event/intro-to-at-aac-part-3-at-aac-evaluations-and-devices/'
+    },
+    {
       id: 'caa-2027-01-23-quotidien-pratique', title: 'Outils pour gérer le quotidien à la maison et en classe — partie pratique', shortTitle: 'Outils du quotidien : pratique',
       startDate: '2027-01-23', format: 'Présentiel', category: 'Événement connexe',
       venue: 'Maison des Associations', city: 'Lagny-sur-Marne', organizer: 'Handmirable',
       description: 'Deuxième rencontre du cycle Handmirable sur les outils pour accompagner le quotidien d’un enfant en situation de handicap, à la maison et en classe. Cette séance constitue la partie pratique de la conférence du 9 janvier. La CAA n’est pas explicitement mentionnée comme thème de la conférence.',
       moreInfoUrl: 'https://www.handmirable.fr/conferences/'
+    },
+    {
+      id: 'caa-2027-02-11-aaces', title: 'AAC Early Starts Conference 2027', shortTitle: 'AAC Early Starts Conference',
+      startDate: '2027-02-11', endDate: '2027-02-13', format: 'Distanciel', category: 'Conférence', organizer: 'AACcessible — The AAC Academy',
+      description: 'Conférence internationale en anglais, gratuite en direct, consacrée à la CAA chez les enfants de 0 à 8 ans. L’édition 2027 porte sur le passage de l’accès aux outils à une participation réelle dans la vie quotidienne. La préconférence aura lieu le 11 février et la conférence principale les 12 et 13 février.',
+      registrationUrl: 'https://www.theaacacademy.org/course/aaces-2027'
     }
   ];
 
   const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-  const LAST_MONTH_INDEX = 12; // De janvier 2026 à janvier 2027 inclus.
+  const LAST_MONTH_INDEX = 13; // De janvier 2026 à février 2027 inclus.
   function monthIndex(date) {
     const index = (date.getFullYear() - 2026) * 12 + date.getMonth();
     return index >= 0 && index <= LAST_MONTH_INDEX ? index : null;
@@ -407,7 +451,7 @@
   function monthLabel(index) { return MONTHS[index % 12] + ' ' + (2026 + Math.floor(index / 12)); }
   let today = new Date();
   let currentMonth = monthIndex(today);
-  let selectedMonth = currentMonth === null ? (today.getFullYear() > 2027 || today.getFullYear() === 2027 && today.getMonth() > 0 ? LAST_MONTH_INDEX : 0) : currentMonth;
+  let selectedMonth = currentMonth === null ? (today.getFullYear() > 2027 || today.getFullYear() === 2027 && today.getMonth() > 1 ? LAST_MONTH_INDEX : 0) : currentMonth;
   let expandedDay = '';
   let opener = null;
   const els = {
@@ -423,7 +467,7 @@
 
   /* Dates en UTC pour éviter les décalages liés aux fuseaux horaires. */
   function parseDate(value) {
-    if (!/^(?:2026-\d{2}|2027-01)-\d{2}$/.test(value || '')) return null;
+    if (!/^(?:2026-\d{2}|2027-(?:01|02))-\d{2}$/.test(value || '')) return null;
     const date = new Date(value + 'T12:00:00Z');
     return Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value ? null : date;
   }
@@ -569,7 +613,7 @@
     els.status.textContent = monthLabel(selectedMonth) + ' : ' + visible.length + ' événement' + (visible.length > 1 ? 's' : '') + ' affiché' + (visible.length > 1 ? 's' : '') + '.';
   }
 
-  /* Navigation de janvier 2026 à janvier 2027. */
+  /* Navigation de janvier 2026 à février 2027. */
   els.prev.addEventListener('click', function () { if (selectedMonth > 0) { selectedMonth--; expandedDay = ''; render(); } });
   els.next.addEventListener('click', function () { if (selectedMonth < LAST_MONTH_INDEX) { selectedMonth++; expandedDay = ''; render(); } });
   els.today.addEventListener('click', function () { if (currentMonth !== null) { selectedMonth = currentMonth; expandedDay = ''; render(); } });
@@ -600,7 +644,7 @@
     addDetail('Adresse', event.address);
     els.description.textContent = event.description || '';
     els.actions.replaceChildren();
-    addAction('S’inscrire à l’événement', event.registrationUrl, 'caa-agenda__cta');
+    addAction(event.registrationLabel || 'S’inscrire à l’événement', event.registrationUrl, 'caa-agenda__cta');
     addAction(event.moreInfoLabel || 'En savoir plus', event.moreInfoUrl, 'caa-agenda__secondary');
     /* Un lien utile reste disponible même pour un futur événement sans URL publiée. */
     if (!els.actions.children.length) addAction('Consulter le site CAA AuRA', 'https://caa-aura.fr/', 'caa-agenda__secondary');
